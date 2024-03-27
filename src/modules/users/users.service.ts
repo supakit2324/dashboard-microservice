@@ -15,7 +15,7 @@ export class UsersService {
   private readonly logger = new Logger(UsersService.name);
   @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy;
 
-  async registerUser(body: CreateUserDto): Promise<Observable<any>> {
+  registerUser(body: CreateUserDto): Observable<CreateUserDto> {
     return this.usersServiceQmq.emit(
       {
         cmd: USER_CMD,
@@ -41,7 +41,7 @@ export class UsersService {
     );
   }
 
-  updateUser(userId: string, update: UpdateUserDto): Observable<any> {
+  updateUser(userId: string, update: UpdateUserDto): Observable<UpdateUserDto> {
     return this.usersServiceQmq.emit(
       {
         cmd: USER_CMD,
@@ -66,7 +66,7 @@ export class UsersService {
     );
   }
 
-  banUser(userId: string): Observable<any> {
+  banUser(userId: string): Observable<UsersInterface> {
     return this.usersServiceQmq.emit(
       {
         cmd: USER_CMD,
@@ -76,7 +76,7 @@ export class UsersService {
     );
   }
 
-  unBanUser(userId: string): Observable<any> {
+  unBanUser(userId: string): Observable<UsersInterface> {
     return this.usersServiceQmq.emit(
       {
         cmd: USER_CMD,
@@ -86,7 +86,7 @@ export class UsersService {
     );
   }
 
-  updateRole(update: { userId: string; roles: string }): Observable<any> {
+  updateRole(update: { userId: string; roles: string }): Observable<UsersInterface> {
     return this.usersServiceQmq.emit(
       {
         cmd: USER_CMD,
