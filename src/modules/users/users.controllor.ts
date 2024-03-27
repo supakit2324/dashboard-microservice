@@ -14,21 +14,21 @@ import { ApiBody, ApiTags, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { Payload } from '@nestjs/microservices';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { userEntyty } from './entities/users.entity';
+import { UserEntity } from './entities/users.entity';
 import ReqUser from 'src/decorators/req-user.decorator';
-import { usersInterface } from './interfaces/users.interface';
-import { changePasswordDto } from './dto/change-password.dto';
+import { UsersInterface } from './interfaces/users.interface';
+import { ChangePasswordDto } from './dto/change-password.dto';
 import { ChangePasswordUserValidationPipe } from './pipes/change-password-user-validation.pipe';
-import { ChangePasswordEntyty } from './entities/change-password.entity';
-import { updateUserDto } from './dto/update-user.dto';
-import { updateUserEntyty } from './entities/update-user.entity';
-import { rolesUserEnum } from './enum/roles-user.enum';
-import { updateRolesDTO } from './dto/update-role.dto';
+import { ChangePasswordEntity } from './entities/change-password.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserEntity } from './entities/update-user.entity';
+import { RolesUserEnum } from './enum/roles-user.enum';
+import { UpdateRolesDTO } from './dto/update-role.dto';
 import { UsersQueryDto } from './dto/users-query.dto';
 import UsersQueryEntity from './entities/users-query.entity';
 import { UseRoles } from 'src/decorators/role.decorator';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
-import { reportUserEntity } from './entities/report-users.entity';
+import { ReportUserEntity } from './entities/report-users.entity';
 
 @Controller('users')
 @ApiTags('user')
@@ -38,27 +38,27 @@ export class UsersController {
 
   @Get('me')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiBearerAuth()
-  async getMe(@ReqUser() user: usersInterface): Promise<userEntyty> {
+  async getMe(@ReqUser() user: UsersInterface): Promise<UserEntity> {
     return user;
   }
 
   @Put('update')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiBearerAuth()
   @ApiBody({
-    type: updateUserDto,
+    type: UpdateUserDto,
   })
   @ApiResponse({
     status: 200,
     description: 'Success',
-    type: updateUserEntyty,
+    type: UpdateUserEntity,
   })
   async updateUser(
-    @ReqUser() user: usersInterface,
-    @Body() update: updateUserDto,
+    @ReqUser() user: UsersInterface,
+    @Body() update: UpdateUserDto,
   ): Promise<void> {
     try {
       await this.usersService.updateUser(user.userId, update);
@@ -74,19 +74,19 @@ export class UsersController {
 
   @Put('change-password')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiBearerAuth()
   @ApiBody({
-    type: changePasswordDto,
+    type: ChangePasswordDto,
   })
   @ApiResponse({
     status: 200,
     description: 'Success',
-    type: ChangePasswordEntyty,
+    type: ChangePasswordEntity,
   })
   async changePassword(
-    @ReqUser() user: usersInterface,
-    @Body(ChangePasswordUserValidationPipe) body: changePasswordDto,
+    @ReqUser() user: UsersInterface,
+    @Body(ChangePasswordUserValidationPipe) body: ChangePasswordDto,
   ): Promise<void> {
     try {
       await this.usersService.changePasswordUser(
@@ -105,14 +105,14 @@ export class UsersController {
 
   @Put('update-role/:userId')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
     description: 'Success',
   })
   @ApiBody({
-    type: updateRolesDTO,
+    type: UpdateRolesDTO,
   })
   async updateRole(
     @Payload() update: { userId: string; roles: string },
@@ -131,7 +131,7 @@ export class UsersController {
 
   @Put('ban-user/:userId')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
@@ -157,7 +157,7 @@ export class UsersController {
 
   @Put('un-ban-user/:userId')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
@@ -182,7 +182,7 @@ export class UsersController {
 
   @Get('pagination')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiBearerAuth()
   @ApiResponse({
     status: 200,
@@ -218,14 +218,14 @@ export class UsersController {
 
   @Get('report-new-user')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     status: 200,
     description: 'Success',
-    type: reportUserEntity,
+    type: ReportUserEntity,
   })
   @ApiBearerAuth()
-  async reportNewUser(): Promise<usersInterface> {
+  async reportNewUser(): Promise<UsersInterface> {
     try {
       const newUsers = await this.usersService.findNewUser();
       if (!Array.isArray(newUsers) || newUsers.length === 0) {

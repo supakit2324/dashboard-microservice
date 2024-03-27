@@ -5,17 +5,17 @@ import {
   PipeTransform,
 } from '@nestjs/common';
 import { BooksService } from '../books.service';
-import { updateBookDTO } from '../dto/update-book.dto';
+import { UpdateBookDTO } from '../dto/update-book.dto';
 import { BooksInterface } from '../interfaces/books.interface';
 
-export class updateBookValidationPipe implements PipeTransform {
-  private readonly logger = new Logger(updateBookValidationPipe.name);
+export class UpdateBookValidationPipe implements PipeTransform {
+  private readonly logger = new Logger(UpdateBookValidationPipe.name);
 
   constructor(
     @Inject(BooksService) private readonly booksService: BooksService,
   ) {}
 
-  async transform(body: updateBookDTO): Promise<updateBookDTO> {
+  async transform(body: UpdateBookDTO): Promise<UpdateBookDTO> {
     let book: BooksInterface;
     try {
       book = await this.booksService.getBookById(body.bookId);

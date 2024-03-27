@@ -1,11 +1,11 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { RMQService, USER_CMD } from 'src/constants';
-import { createUserDto } from './dto/create-users.dto';
+import { CreateUserDto } from './dto/create-users.dto';
 import { Observable, lastValueFrom } from 'rxjs';
-import { ChangePasswordEntyty } from './entities/change-password.entity';
-import { updateUserDto } from './dto/update-user.dto';
-import { usersInterface } from './interfaces/users.interface';
+import { ChangePasswordEntity } from './entities/change-password.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UsersInterface } from './interfaces/users.interface';
 import { UsersQueryDto } from './dto/users-query.dto';
 import { PaginationResponseInterface } from 'src/interfaces/pagination.interface';
 import { UsersQueryResponseEntity } from './entities/users-query-response.entity';
@@ -15,7 +15,7 @@ export class UsersService {
   private readonly logger = new Logger(UsersService.name);
   @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy;
 
-  async registerUser(body: createUserDto): Promise<Observable<any>> {
+  async registerUser(body: CreateUserDto): Promise<Observable<any>> {
     return this.usersServiceQmq.emit(
       {
         cmd: USER_CMD,
@@ -28,7 +28,7 @@ export class UsersService {
   changePasswordUser(
     userId: string,
     hashPassword: string,
-  ): Observable<ChangePasswordEntyty> {
+  ): Observable<ChangePasswordEntity> {
     return this.usersServiceQmq.emit(
       {
         cmd: USER_CMD,
@@ -41,7 +41,7 @@ export class UsersService {
     );
   }
 
-  updateUser(userId: string, update: updateUserDto): Observable<any> {
+  updateUser(userId: string, update: UpdateUserDto): Observable<any> {
     return this.usersServiceQmq.emit(
       {
         cmd: USER_CMD,
@@ -54,7 +54,7 @@ export class UsersService {
     );
   }
 
-  findNewUser(): Promise<usersInterface> {
+  findNewUser(): Promise<UsersInterface> {
     return lastValueFrom(
       this.usersServiceQmq.send(
         {

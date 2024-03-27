@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { RMQService, USER_CMD } from 'src/constants';
-import { loginUserDto } from './dto/user-login.dto';
+import { LoginUserDto } from './dto/user-login.dto';
 import { lastValueFrom } from 'rxjs';
-import { usersInterface } from '../users/interfaces/users.interface';
+import { UsersInterface } from '../users/interfaces/users.interface';
 import { UsersLoginEntity } from './entities/user-login-entity';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class AuthService {
   @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy;
 
   async loginUser(email: string, password: string): Promise<UsersLoginEntity> {
-    const body: loginUserDto = { email, password };
+    const body: LoginUserDto = { email, password };
     return lastValueFrom(
       this.usersServiceQmq.send(
         {
@@ -23,7 +23,7 @@ export class AuthService {
     );
   }
 
-  async getByUserId(userId: string): Promise<usersInterface> {
+  async getByUserId(userId: string): Promise<UsersInterface> {
     return lastValueFrom(
       this.usersServiceQmq.send(
         {
@@ -35,7 +35,7 @@ export class AuthService {
     );
   }
 
-  async getByEmail(email: string): Promise<usersInterface> {
+  async getByEmail(email: string): Promise<UsersInterface> {
     return lastValueFrom(
       this.usersServiceQmq.send(
         {
@@ -47,7 +47,7 @@ export class AuthService {
     );
   }
 
-  async getByUsername(username: string): Promise<usersInterface> {
+  async getByUsername(username: string): Promise<UsersInterface> {
     return lastValueFrom(
       this.usersServiceQmq.send(
         {
@@ -59,7 +59,7 @@ export class AuthService {
     );
   }
 
-  async getBlockUser(email: string): Promise<usersInterface> {
+  async getBlockUser(email: string): Promise<UsersInterface> {
     return lastValueFrom(
       this.usersServiceQmq.send(
         {
@@ -71,7 +71,7 @@ export class AuthService {
     );
   }
 
-  async getAdminRole(email: string): Promise<usersInterface> {
+  async getAdminRole(email: string): Promise<UsersInterface> {
     return lastValueFrom(
       this.usersServiceQmq.send(
         {

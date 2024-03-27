@@ -10,7 +10,7 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { OrdersService } from './orders.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { BooksStockService } from '../books-stock/books-stock.service';
-import { rolesUserEnum } from '../users/enum/roles-user.enum';
+import { RolesUserEnum } from '../users/enum/roles-user.enum';
 import { PageQueryDto } from 'src/dto/query.dto';
 import { DayQueryDTO } from './dto/day-query.dto';
 import { UserOrderUtil } from '../utils/user-order';
@@ -29,7 +29,7 @@ export class OrdersController {
 
   @Get('orders-user')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     status: 200,
     description: 'Success',
@@ -50,7 +50,7 @@ export class OrdersController {
 
   @Get('top-seller')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     status: 200,
     description: 'Success',
@@ -71,7 +71,7 @@ export class OrdersController {
 
   @Get('top-seller-by-category')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     status: 200,
     description: 'Success',
@@ -93,7 +93,7 @@ export class OrdersController {
 
   @Get('top-user-bought')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     status: 200,
     description: 'Success',
@@ -113,7 +113,7 @@ export class OrdersController {
 
   @Get('report')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     status: 200,
     description: 'Success',

@@ -1,6 +1,6 @@
 import CategoryEnum from '../enum/category.enum';
 
-export interface updateBookInterface {
+export interface UpdateBookInterface {
   bookId: string;
   bookName: string;
   price: number;

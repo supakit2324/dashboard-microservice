@@ -9,8 +9,8 @@ import { BooksStockService } from '../books-stock.service';
 import { BooksStockInterface } from '../interfaces/books-stock.interface';
 
 @Injectable()
-export class addBooksStockValidationPipe implements PipeTransform {
-  private readonly logger = new Logger(addBooksStockValidationPipe.name);
+export class AddBooksStockValidationPipe implements PipeTransform {
+  private readonly logger = new Logger(AddBooksStockValidationPipe.name);
 
   constructor(
     private readonly booksService: BooksService,

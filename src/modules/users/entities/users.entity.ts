@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class userEntyty {
+export class UserEntity {
   @ApiProperty({
     example: 'email',
     type: String,

@@ -20,9 +20,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateBookStockDTO } from './dto/create-book-stock.dto';
-import { createBooksStockValidationPipe } from './pipe/add-books-stock-validation.pipe';
-import { addBooksInStockDto } from './dto/add-book-stock.dto';
-import { addBooksStockValidationPipe } from './pipe/update-book-in-stock-validation.pipe';
+import { CreateBooksStockValidationPipe } from './pipe/add-books-stock-validation.pipe';
+import { AddBooksInStockDto } from './dto/add-book-stock.dto';
+import { AddBooksStockValidationPipe } from './pipe/update-book-in-stock-validation.pipe';
 import { BooksStockInterface } from './interfaces/books-stock.interface';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { BooksStockQueryDto } from './dto/books-stock-query.dto';
@@ -30,7 +30,7 @@ import BooksStockQueryEntity from './entities/books-stock-query.entity';
 import { BooksStockCategoryUtil } from '../utils/books-stock';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { UseRoles } from 'src/decorators/role.decorator';
-import { rolesUserEnum } from '../users/enum/roles-user.enum';
+import { RolesUserEnum } from '../users/enum/roles-user.enum';
 import { RunningOutQueryDTO } from './dto/running-out-query.dto';
 import { RunningOutEntity } from './entities/running-out.entity';
 
@@ -49,7 +49,7 @@ export class BooksStockController {
     type: BooksStockQueryEntity,
   })
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   async getPagination(
     @Query() query: BooksStockQueryDto,
   ): Promise<BooksStockQueryEntity> {
@@ -77,7 +77,7 @@ export class BooksStockController {
 
   @Get('get-all-books-in-stock')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   async getAllBooksInStock(): Promise<BooksStockInterface> {
     try {
       return await this.booksStockService.getAllBooksInStock();
@@ -93,12 +93,12 @@ export class BooksStockController {
 
   @Post('create-book-to-stock')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiBody({
     type: CreateBookStockDTO,
   })
   async createBookToStock(
-    @Body(createBooksStockValidationPipe) body: CreateBookStockDTO,
+    @Body(CreateBooksStockValidationPipe) body: CreateBookStockDTO,
   ): Promise<void> {
     try {
       await this.booksStockService.createBookToStock(body);
@@ -114,17 +114,17 @@ export class BooksStockController {
 
   @Put('add-book-in-stock/:bookId')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiParam({
     type: String,
     name: 'bookId',
   })
   @ApiBody({
-    type: addBooksInStockDto,
+    type: AddBooksInStockDto,
   })
   async addBookInStock(
-    @Param('bookId', addBooksStockValidationPipe) addStock: BooksStockInterface,
-    @Body() body: addBooksInStockDto,
+    @Param('bookId', AddBooksStockValidationPipe) addStock: BooksStockInterface,
+    @Body() body: AddBooksInStockDto,
   ): Promise<void> {
     try {
       await this.booksStockService.addBookToStock(addStock, body.quantity);
@@ -140,7 +140,7 @@ export class BooksStockController {
 
   @Get('running-out')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     status: 200,
     description: 'Successs',
@@ -163,7 +163,7 @@ export class BooksStockController {
 
   @Delete('delete-book-in-stock/:bookId')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     status: 200,
     description: 'Success',

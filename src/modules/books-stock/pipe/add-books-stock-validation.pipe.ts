@@ -11,8 +11,8 @@ import { BooksStockInterface } from '../interfaces/books-stock.interface';
 import { BooksInterface } from '../../books/interfaces/books.interface';
 
 @Injectable()
-export class createBooksStockValidationPipe implements PipeTransform {
-  private readonly logger = new Logger(createBooksStockValidationPipe.name);
+export class CreateBooksStockValidationPipe implements PipeTransform {
+  private readonly logger = new Logger(CreateBooksStockValidationPipe.name);
 
   constructor(
     private readonly booksService: BooksService,

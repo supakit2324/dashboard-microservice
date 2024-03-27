@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import CategoryEnum from '../enum/category.enum';
 import { IsEnum, IsNotEmpty } from 'class-validator';
 
-export class updateBookDTO {
+export class UpdateBookDTO {
   @ApiProperty({
     type: String,
     example: 'bookId',

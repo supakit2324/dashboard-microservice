@@ -20,18 +20,18 @@ import { BooksInterface } from './interfaces/books.interface';
 import BooksQueryEntity from './entities/books-query.entity';
 import { BooksQueryDto } from './dto/books-query.dto';
 import { BooksCategoryUtil } from '../utils/books';
-import { updateBookDTO } from './dto/update-book.dto';
-import { updateBookInterface } from './interfaces/update-book.interfcace';
-import { updateBookValidationPipe } from './pipe/update-book-validation.pipe';
+import { UpdateBookDTO } from './dto/update-book.dto';
+import { UpdateBookInterface } from './interfaces/update-book.interfcace';
+import { UpdateBookValidationPipe } from './pipe/update-book-validation.pipe';
 import { UseRoles } from 'src/decorators/role.decorator';
-import { rolesUserEnum } from '../users/enum/roles-user.enum';
+import { RolesUserEnum } from '../users/enum/roles-user.enum';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 
 @Controller('books')
 @ApiTags('books')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, JwtRoleGuard)
-@UseRoles(rolesUserEnum.ADMIN)
+@UseRoles(RolesUserEnum.ADMIN)
 export class BooksController {
   private readonly logger = new Logger(BooksController.name);
 
@@ -104,10 +104,10 @@ export class BooksController {
 
   @Put('update-book')
   @ApiBody({
-    type: updateBookDTO,
+    type: UpdateBookDTO,
   })
   async updateBook(
-    @Body(updateBookValidationPipe) update: updateBookInterface,
+    @Body(UpdateBookValidationPipe) update: UpdateBookInterface,
   ): Promise<void> {
     try {
       await this.booksService.updateBook(update.bookId, update);

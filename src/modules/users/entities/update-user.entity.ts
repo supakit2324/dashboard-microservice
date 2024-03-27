@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class updateUserEntyty {
+export class UpdateUserEntity {
   @ApiProperty({
     example: 'firstname',
     type: String,

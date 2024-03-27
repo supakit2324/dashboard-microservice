@@ -7,7 +7,7 @@ import { BooksInterface } from './interfaces/books.interface';
 import { BooksQueryDto } from './dto/books-query.dto';
 import { PaginationResponseInterface } from 'src/interfaces/pagination.interface';
 import { BooksEntity } from './entities/books.entity';
-import { updateBookDTO } from './dto/update-book.dto';
+import { UpdateBookDTO } from './dto/update-book.dto';
 
 @Injectable()
 export class BooksService {
@@ -61,7 +61,7 @@ export class BooksService {
     );
   }
 
-  updateBook(bookId: string, update: updateBookDTO): Observable<any> {
+  updateBook(bookId: string, update: UpdateBookDTO): Observable<any> {
     return this.booksServiceRMQ.emit(
       {
         cmd: BOOKS_CMD,

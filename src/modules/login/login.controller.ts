@@ -14,7 +14,7 @@ import { AmountLoginDTO } from './dto/login.dto';
 import { CalendarDTO } from './dto/calendar.dto';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { UseRoles } from 'src/decorators/role.decorator';
-import { rolesUserEnum } from '../users/enum/roles-user.enum';
+import { RolesUserEnum } from '../users/enum/roles-user.enum';
 import { UserLastLoginResponseEntity } from './entities/user-last-login-respones.entity';
 
 @Controller('amount-login')
@@ -27,7 +27,7 @@ export class LogginController {
 
   @Get('amount-users-login')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     type: AmountLoginDTO,
     status: 200,
@@ -54,7 +54,7 @@ export class LogginController {
 
   @Get('last-users-login')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(rolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     type: UserLastLoginResponseEntity,
     status: 200,

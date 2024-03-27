@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBody, ApiTags, ApiResponse } from '@nestjs/swagger';
-import { loginUserDto } from '../auth/dto/user-login.dto';
+import { LoginUserDto } from '../auth/dto/user-login.dto';
 import { AuthService } from '../auth/auth.service';
 import { SkipThrottle } from '@nestjs/throttler';
 import { LoginAuthGuard } from './guards/login-auth.guard';
@@ -24,13 +24,13 @@ export class AuthController {
   @SkipThrottle({ value: true })
   @UseGuards(LoginAuthGuard)
   @ApiBody({
-    type: loginUserDto,
+    type: LoginUserDto,
   })
   @ApiResponse({
     status: 200,
     type: UsersLoginEntity,
   })
-  async loginUser(@Body() body: loginUserDto) {
+  async loginUser(@Body() body: LoginUserDto) {
     const { email, password } = body;
     try {
       return await this.authService.loginUser(email, password);
