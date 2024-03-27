@@ -39,7 +39,7 @@ export class BooksStockService {
     );
   }
 
-  createBookToStock(body: CreateBookStockDTO): Observable<any> {
+  createBookToStock(body: CreateBookStockDTO): Observable<BooksStockInterface> {
     return this.stockServiceRMQ.emit(
       {
         cmd: BOOKSSTOCK_CMD,
@@ -57,7 +57,7 @@ export class BooksStockService {
   addBookToStock(
     addStock: BooksStockInterface,
     quantity: number,
-  ): Observable<any> {
+  ): Observable<BooksStockInterface> {
     return this.stockServiceRMQ.emit(
       {
         cmd: BOOKSSTOCK_CMD,
