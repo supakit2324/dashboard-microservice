@@ -15,7 +15,7 @@ export class BooksStockService {
     @Inject(RMQService.BOOKS) private readonly stockServiceRMQ: ClientProxy,
   ) {}
 
-  getAllBooksInStock(): Promise<BooksStockInterface> {
+  async getAllBooksInStock(): Promise<BooksStockInterface[]> {
     return lastValueFrom(
       this.stockServiceRMQ.send(
         {
@@ -27,7 +27,7 @@ export class BooksStockService {
     );
   }
 
-  getBookStockById(bookId: string): Promise<BooksStockInterface> {
+  async getBookStockById(bookId: string): Promise<BooksStockInterface> {
     return lastValueFrom(
       this.stockServiceRMQ.send(
         {
@@ -70,7 +70,7 @@ export class BooksStockService {
     );
   }
 
-  deleteBookToStock(bookId: string): Promise<BooksStockInterface> {
+  async deleteBookToStock(bookId: string): Promise<BooksStockInterface> {
     return lastValueFrom(
       this.stockServiceRMQ.send(
         {
@@ -82,7 +82,7 @@ export class BooksStockService {
     );
   }
 
-  runningOut(query: RunningOutQueryDTO): Promise<BooksStockInterface> {
+  async runningOut(query: RunningOutQueryDTO): Promise<BooksStockInterface> {
     return lastValueFrom(
       this.stockServiceRMQ.send(
         {

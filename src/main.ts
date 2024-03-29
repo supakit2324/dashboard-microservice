@@ -19,6 +19,13 @@ async function bootstrap() {
   const provider = configService.get<string>('provider');
   const logger = new Logger();
 
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+    }),
+  );
+
   const config = new DocumentBuilder()
     .setTitle('DashBoard')
     .setVersion('1.0')
@@ -27,17 +34,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      whitelist: true,
-    }),
-  );
-
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls: [process.env.RMQ],
+      urls: [process.env.rmq],
       queue: getQueueName(provider),
       queueOptions: {
         durable: false,
@@ -51,8 +51,8 @@ async function bootstrap() {
       Application ${provider} started listen on port ${port}
       Local Timezone guess: ${dayjs.tz.guess()}
       Local Date: ${dayjs().toDate().toISOString()} ~ ${dayjs().format(
-        'YYYY-MM-DD HH:mm:ss',
-      )}
+      'YYYY-MM-DD HH:mm:ss',
+    )}
     `);
   });
 }

@@ -21,7 +21,7 @@ import { ConfigModule } from '@nestjs/config';
         name: RMQService.BOOKS,
         transport: Transport.RMQ,
         options: {
-          urls: [process.env.RMQ],
+          urls: [process.env.rmq],
           noAck: true,
           queue: RMQService.BOOKS,
           queueOptions: {
@@ -33,7 +33,7 @@ import { ConfigModule } from '@nestjs/config';
         name: RMQService.USERS,
         transport: Transport.RMQ,
         options: {
-          urls: [process.env.RMQ],
+          urls: [process.env.rmq],
           noAck: true,
           queue: RMQService.USERS,
           queueOptions: {

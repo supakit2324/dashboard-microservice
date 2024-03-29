@@ -2,6 +2,7 @@ import omit from 'lodash/omit';
 import * as dayjs from 'dayjs';
 import { isEqual, orderBy } from 'lodash';
 import { DayQueryDTO } from 'src/modules/orders/dto/day-query.dto';
+import { ReportOrderDTO } from 'src/modules/orders/dto/report-order.dto';
 
 export class UserOrderUtil {
   static getTotalUserOrder(Ecategory: object, userOrders: any[]) {
@@ -19,7 +20,7 @@ export class UserOrderUtil {
     return categores;
   }
 
-  static getDayInput(values: any[], query: DayQueryDTO) {
+  static getDayInput(values: ReportOrderDTO[], query: DayQueryDTO) {
     const { startDay, endDay } = query;
     const startDate = dayjs(startDay);
     const endDate = dayjs(endDay);

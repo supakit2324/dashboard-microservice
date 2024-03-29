@@ -8,7 +8,7 @@ import { CalendarDTO } from './dto/calendar.dto';
 export class LoginService {
   @Inject(RMQService.USERS) private readonly loginServiceRMQ: ClientProxy;
 
-  getAmountUsersLogin(query: { date: Date }): Promise<CalendarDTO> {
+  async getAmountUsersLogin(query: { date: Date }): Promise<CalendarDTO> {
     return lastValueFrom(
       this.loginServiceRMQ.send(
         {
@@ -20,7 +20,7 @@ export class LoginService {
     );
   }
 
-  getLastUsersLogin(query: { date: Date }): Promise<CalendarDTO> {
+  async getLastUsersLogin(query: { date: Date }): Promise<CalendarDTO> {
     return lastValueFrom(
       this.loginServiceRMQ.send(
         {

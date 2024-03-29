@@ -15,7 +15,7 @@ export class BooksService {
     @Inject(RMQService.BOOKS) private readonly booksServiceRMQ: ClientProxy,
   ) {}
 
-  createBook(body: CreateBooksDTO): Observable<any> {
+  createBook(body: CreateBooksDTO): Observable<CreateBooksDTO> {
     return this.booksServiceRMQ.emit(
       {
         cmd: BOOKS_CMD,
@@ -25,7 +25,7 @@ export class BooksService {
     );
   }
 
-  getBookName(bookName: string): Promise<BooksInterface> {
+  async getBookName(bookName: string): Promise<BooksInterface> {
     return lastValueFrom(
       this.booksServiceRMQ.send(
         {
@@ -37,7 +37,7 @@ export class BooksService {
     );
   }
 
-  getBookById(bookId: string): Promise<BooksInterface> {
+  async getBookById(bookId: string): Promise<BooksInterface> {
     return lastValueFrom(
       this.booksServiceRMQ.send(
         {
@@ -49,7 +49,7 @@ export class BooksService {
     );
   }
 
-  getAllBooks(): Promise<BooksInterface> {
+  async getAllBooks(): Promise<BooksInterface[]> {
     return lastValueFrom(
       this.booksServiceRMQ.send(
         {
@@ -61,7 +61,7 @@ export class BooksService {
     );
   }
 
-  updateBook(bookId: string, update: UpdateBookDTO): Observable<any> {
+  updateBook(bookId: string, update: UpdateBookDTO): Observable<UpdateBookDTO> {
     return this.booksServiceRMQ.emit(
       {
         cmd: BOOKS_CMD,
@@ -74,7 +74,7 @@ export class BooksService {
     );
   }
 
-  deleteBook(bookId: string): Promise<BooksInterface> {
+  async deleteBook(bookId: string): Promise<BooksInterface> {
     return lastValueFrom(
       this.booksServiceRMQ.send(
         {

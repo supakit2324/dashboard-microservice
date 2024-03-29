@@ -14,7 +14,7 @@ import { SkipThrottle } from '@nestjs/throttler';
 import { LoginAuthGuard } from './guards/login-auth.guard';
 import { UsersLoginEntity } from './entities/user-login-entity';
 
-@Controller('users')
+@Controller('auth')
 @ApiTags('auth')
 export class AuthController {
   private readonly logger = new Logger(AuthController.name);

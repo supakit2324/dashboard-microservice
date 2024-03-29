@@ -78,7 +78,7 @@ export class BooksStockController {
   @Get('get-all-books-in-stock')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
   @UseRoles(RolesUserEnum.ADMIN)
-  async getAllBooksInStock(): Promise<BooksStockInterface> {
+  async getAllBooksInStock(): Promise<BooksStockInterface[]> {
     try {
       return await this.booksStockService.getAllBooksInStock();
     } catch (e) {
@@ -161,7 +161,7 @@ export class BooksStockController {
     }
   }
 
-  @Delete('delete-book-in-stock/:bookId')
+  @Delete(':bookId')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
   @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({

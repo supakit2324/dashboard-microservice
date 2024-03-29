@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { RMQService, USER_CMD } from 'src/constants';
 import { CreateUserDto } from './dto/create-users.dto';
@@ -12,7 +12,6 @@ import { UsersQueryResponseEntity } from './entities/users-query-response.entity
 
 @Injectable()
 export class UsersService {
-  private readonly logger = new Logger(UsersService.name);
   @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy;
 
   registerUser(body: CreateUserDto): Observable<CreateUserDto> {
@@ -54,7 +53,7 @@ export class UsersService {
     );
   }
 
-  findNewUser(): Promise<UsersInterface> {
+  async findNewUser(): Promise<UsersInterface> {
     return lastValueFrom(
       this.usersServiceQmq.send(
         {

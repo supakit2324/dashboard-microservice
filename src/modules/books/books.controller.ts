@@ -57,7 +57,6 @@ export class BooksController {
     }
 
     try {
-      query.perPage = 5;
       return this.booksService.getPagination(query);
     } catch (e) {
       this.logger.error(
@@ -89,7 +88,7 @@ export class BooksController {
   }
 
   @Get('get-all-books')
-  async getAllBooks(): Promise<BooksInterface> {
+  async getAllBooks(): Promise<BooksInterface[]> {
     try {
       return await this.booksService.getAllBooks();
     } catch (e) {
@@ -121,7 +120,7 @@ export class BooksController {
     }
   }
 
-  @Delete('delete-book/:bookId')
+  @Delete(':bookId')
   @ApiResponse({
     status: 200,
     description: 'Success',

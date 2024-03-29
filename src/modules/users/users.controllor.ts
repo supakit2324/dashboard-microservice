@@ -129,7 +129,7 @@ export class UsersController {
     }
   }
 
-  @Put('ban-user/:userId')
+  @Put(':userId/banned')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
   @UseRoles(RolesUserEnum.ADMIN)
   @ApiBearerAuth()
@@ -155,7 +155,7 @@ export class UsersController {
     }
   }
 
-  @Put('un-ban-user/:userId')
+  @Put(':userId/unbanned')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
   @UseRoles(RolesUserEnum.ADMIN)
   @ApiBearerAuth()

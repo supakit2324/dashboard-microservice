@@ -7,6 +7,5 @@ export class RunningOutQueryDTO {
     example: 10,
   })
   @IsOptional()
-  @IsNotEmpty()
   min: number;
 }

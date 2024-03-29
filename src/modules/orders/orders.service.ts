@@ -4,12 +4,17 @@ import { ORDERS_CMD, RMQService } from 'src/constants';
 import { lastValueFrom } from 'rxjs';
 import { PageQueryDto } from 'src/dto/query.dto';
 import { DayQueryDTO } from './dto/day-query.dto';
+import { TopUserBoughtInterface } from './interfaces/top-users-bought.interface';
+import { ReportOrderInterface } from './interfaces/report-order.interface';
+import { TopSellerInterface } from './interfaces/top-seller.interface';
+import { OrdersUsersInterface } from './interfaces/orders-users-query.interface';
+import { TopSellCategoryInterface } from './interfaces/top-sell-category.interface';
 
 @Injectable()
 export class OrdersService {
   @Inject(RMQService.BOOKS) private readonly ordersServiceRMQ: ClientProxy;
 
-  async getTopSeller(): Promise<any> {
+  async getTopSeller(): Promise<TopSellerInterface> {
     return lastValueFrom(
       this.ordersServiceRMQ.send(
         {
@@ -21,7 +26,7 @@ export class OrdersService {
     );
   }
 
-  async getTopSellerByCategory(): Promise<any> {
+  async getTopSellerByCategory(): Promise<TopSellCategoryInterface> {
     return lastValueFrom(
       this.ordersServiceRMQ.send(
         {
@@ -33,7 +38,7 @@ export class OrdersService {
     );
   }
 
-  async getOrdersUsers(query: PageQueryDto): Promise<any> {
+  async getOrdersUsers(query: PageQueryDto): Promise<OrdersUsersInterface> {
     return lastValueFrom(
       this.ordersServiceRMQ.send(
         {
@@ -45,7 +50,7 @@ export class OrdersService {
     );
   }
 
-  async getTopUserBought(query: PageQueryDto): Promise<any> {
+  async getTopUserBought(query: PageQueryDto): Promise<TopUserBoughtInterface> {
     return lastValueFrom(
       this.ordersServiceRMQ.send(
         {
@@ -57,7 +62,7 @@ export class OrdersService {
     );
   }
 
-  async getReport(query: DayQueryDTO): Promise<any> {
+  async getReport(query: DayQueryDTO): Promise<ReportOrderInterface[]> {
     return lastValueFrom(
       this.ordersServiceRMQ.send(
         {

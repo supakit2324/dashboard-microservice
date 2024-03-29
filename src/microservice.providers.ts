@@ -17,7 +17,7 @@ export const MakeRMQServiceProvider = (
   transport: Transport.RMQ,
   options: {
     noAck: true,
-    urls: [process.env.RMQ],
+    urls: [process.env.rmq],
     queue: getQueueName(serviceName),
     queueOptions: {
       durable: false,
