@@ -1,29 +1,29 @@
-import { ApiProperty } from "@nestjs/swagger";
-import CategoryEnum from "src/modules/books/enum/category.enum";
+import { ApiProperty } from '@nestjs/swagger';
+import CategoryEnum from 'src/modules/books/enum/category.enum';
 
 export class TopSellerEntity {
-    @ApiProperty({
-        type: String,
-        enum: CategoryEnum,
-        example: CategoryEnum.ACTION
-    })
-    category: CategoryEnum
+  @ApiProperty({
+    type: String,
+    enum: CategoryEnum,
+    example: CategoryEnum.ACTION,
+  })
+  category: CategoryEnum;
 
-    @ApiProperty({
-        type: Number,
-        example: 1
-    })
-    quantity: number
+  @ApiProperty({
+    type: Number,
+    example: 1,
+  })
+  quantity: number;
 
-    @ApiProperty({
-        type: String,
-        example: 'bookName'
-    })
-    bookName: string
+  @ApiProperty({
+    type: String,
+    example: 'bookName',
+  })
+  bookName: string;
 
-    @ApiProperty({
-        type: String,
-        example: 'BookId'
-    })
-    BookId: string
+  @ApiProperty({
+    type: String,
+    example: 'BookId',
+  })
+  BookId: string;
 }

@@ -12,12 +12,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { plainToInstance } from 'class-transformer';
 import { UsersInterface } from 'src/modules/users/interfaces/users.interface';
 import { LoginUserDto } from '../dto/user-login.dto';
-
 import { Cache } from '@nestjs/cache-manager';
-
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { AuthService } from '../auth.service';
-import { RolesUserEnum } from 'src/modules/users/enum/roles-user.enum';
 
 @Injectable()
 export class LoginAuthGuard extends AuthGuard('local') {
@@ -48,7 +45,7 @@ export class LoginAuthGuard extends AuthGuard('local') {
       throw new UnprocessableEntityException('Not Found User.');
     }
 
-    let blockUser: UsersInterface
+    let blockUser: UsersInterface;
     try {
       blockUser = await this.authService.getBlockUser(user.email);
     } catch (e) {
@@ -62,7 +59,7 @@ export class LoginAuthGuard extends AuthGuard('local') {
       throw new UnauthorizedException('This account benned!');
     }
 
-    let adminRole: UsersInterface
+    let adminRole: UsersInterface;
     try {
       adminRole = await this.authService.getAdminRole(user.email);
     } catch (e) {

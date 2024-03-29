@@ -39,9 +39,11 @@ export class OrdersController {
   @ApiResponse({
     status: 200,
     description: 'Success',
-    type: OrdersUsersQueryEntity
+    type: OrdersUsersQueryEntity,
   })
-  async getOrdersUser(@Query() query: PageQueryDto): Promise<OrdersUsersQueryEntity> {
+  async getOrdersUser(
+    @Query() query: PageQueryDto,
+  ): Promise<OrdersUsersQueryEntity> {
     try {
       return await this.ordersService.getOrdersUsers(query);
     } catch (e) {
@@ -60,11 +62,11 @@ export class OrdersController {
   @ApiResponse({
     status: 200,
     description: 'Success',
-    type: TopSellerEntity
+    type: TopSellerEntity,
   })
   async getTopSeller(): Promise<TopSellerEntity> {
     try {
-      return await this.ordersService.getTopSeller()
+      return await this.ordersService.getTopSeller();
     } catch (e) {
       this.logger.error(
         `catch on get-top-seller: ${e?.message ?? JSON.stringify(e)}`,
@@ -81,7 +83,7 @@ export class OrdersController {
   @ApiResponse({
     status: 200,
     description: 'Success',
-    type: TopSellCategoryEntity
+    type: TopSellCategoryEntity,
   })
   async getTopSellerByCategory(): Promise<TopSellCategoryEntity> {
     try {
@@ -104,7 +106,9 @@ export class OrdersController {
     type: TopUserBoughtEntity,
     description: 'Success',
   })
-  async getTopUserBought(@Query() query: PageQueryDto): Promise<TopUserBoughtEntity> {
+  async getTopUserBought(
+    @Query() query: PageQueryDto,
+  ): Promise<TopUserBoughtEntity> {
     try {
       return await this.ordersService.getTopUserBought(query);
     } catch (e) {
@@ -127,8 +131,8 @@ export class OrdersController {
   })
   async getReport(@Query() query: DayQueryDTO): Promise<ReportOrderDTO> {
     try {
-      const reportData = await this.ordersService.getReport(query)
-      return UserOrderUtil.getDayInput(reportData, query)
+      const reportData = await this.ordersService.getReport(query);
+      return UserOrderUtil.getDayInput(reportData, query);
     } catch (e) {
       throw new InternalServerErrorException({
         message: e?.message ?? e,

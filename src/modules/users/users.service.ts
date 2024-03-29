@@ -85,7 +85,10 @@ export class UsersService {
     );
   }
 
-  updateRole(update: { userId: string; roles: string }): Observable<UsersInterface> {
+  updateRole(update: {
+    userId: string;
+    roles: string;
+  }): Observable<UsersInterface> {
     return this.usersServiceQmq.emit(
       {
         cmd: USER_CMD,
