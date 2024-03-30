@@ -22,6 +22,9 @@ import { OrdersUsersQueryEntity } from './entities/orders-users-query.entity';
 import { TopSellerEntity } from './entities/top-seller.entity';
 import { TopSellCategoryInterface } from './interfaces/top-sell-category.interface';
 import { TopSellCategoryEntity } from './entities/top-sell-category.entity';
+import OrdersQueryByCategoryEntity from './entities/orders-query-category.entity';
+import { OrdersQueryByCategoryDTO } from './dto/orders-query-category.dto';
+import { BooksCategoryUtil } from '../utils/books';
 
 @Controller('orders')
 @ApiTags('orders')
@@ -49,6 +52,28 @@ export class OrdersController {
     } catch (e) {
       this.logger.error(
         `catch on get-top-seller: ${e?.message ?? JSON.stringify(e)}`,
+      );
+      throw new InternalServerErrorException({
+        message: e?.message ?? e,
+      });
+    }
+  }
+
+  @Get('orders-by-category')
+  @UseGuards(JwtAuthGuard, JwtRoleGuard)
+  @UseRoles(RolesUserEnum.ADMIN)
+  @ApiResponse({
+    status: 200,
+    description: 'Success',
+    type: OrdersQueryByCategoryEntity,
+  })
+  async getOrdersByCategory(@Query() query: OrdersQueryByCategoryDTO): Promise<OrdersQueryByCategoryEntity> {
+    query.filter = BooksCategoryUtil.getQueryByCategory(query.category)
+    try {
+      return await this.ordersService.getOrderByCategory(query)
+    } catch (e) {
+      this.logger.error(
+        `catch on orders-by-category: ${e?.message ?? JSON.stringify(e)}`,
       );
       throw new InternalServerErrorException({
         message: e?.message ?? e,

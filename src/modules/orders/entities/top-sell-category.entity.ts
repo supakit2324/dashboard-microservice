@@ -12,5 +12,5 @@ export class TopSellCategoryEntity {
   @ApiProperty({
     type: [TopSellCategoryItemEntity],
   })
-  topSeller: [TopSellCategoryItemEntity];
+  topSeller: TopSellCategoryItemEntity[];
 }

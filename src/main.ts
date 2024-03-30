@@ -1,13 +1,14 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './modules/app/app.module';
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import * as dayjs from 'dayjs';
 import 'dayjs/plugin/timezone';
 import 'dayjs/plugin/isToday';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { getQueueName } from './microservice.providers';
+import { JwtRoleGuard } from './modules/auth/guards/jwt-role.guard';
+import { setupSwagger } from './swagger';
 
 dayjs.extend(require('dayjs/plugin/timezone'));
 dayjs.extend(require('dayjs/plugin/isToday'));
@@ -17,6 +18,7 @@ async function bootstrap() {
   const configService = app.get<ConfigService>(ConfigService);
   const port = configService.get('port');
   const provider = configService.get<string>('provider');
+  const reflector = app.get(Reflector);
   const logger = new Logger();
 
   app.useGlobalPipes(
@@ -26,13 +28,9 @@ async function bootstrap() {
     }),
   );
 
-  const config = new DocumentBuilder()
-    .setTitle('DashBoard')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  setupSwagger(app)
+
+  app.useGlobalGuards(new JwtRoleGuard(reflector));
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

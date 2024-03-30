@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientsModule } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { CacheModule } from '@nestjs/cache-manager';
@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { RMQService } from 'src/constants';
 import RegisterCacheOptions from 'src/cache.providers';
 import { ConfigModule } from '@nestjs/config';
+import { MakeRMQServiceProvider } from 'src/microservice.providers';
 
 @Module({
   imports: [
@@ -17,19 +18,8 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot(),
     CacheModule.registerAsync(RegisterCacheOptions),
     ClientsModule.register([
-      {
-        name: RMQService.USERS,
-        transport: Transport.RMQ,
-        options: {
-          urls: [process.env.rmq],
-          noAck: true,
-          queue: RMQService.USERS,
-          queueOptions: {
-            durable: false,
-          },
-        },
-      },
-    ]),
+      MakeRMQServiceProvider(RMQService.USERS)
+    ])
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

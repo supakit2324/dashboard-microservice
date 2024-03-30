@@ -17,7 +17,7 @@ export class OrdersUsersQueryEntity {
   @ApiProperty({
     type: [OrdersUsersEntity],
   })
-  records: [OrdersUsersEntity];
+  records: OrdersUsersEntity[];
 
   @ApiProperty({
     type: Number,

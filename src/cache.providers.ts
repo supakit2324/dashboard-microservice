@@ -10,7 +10,7 @@ const RegisterCacheOptions: CacheModuleAsyncOptions = {
       store: redisStore,
       host: configService.get<string>('redis.host'),
       port: configService.get<number>('redis.port'),
-      rmqURL: configService.get<string>('rmqURL'),
+      rmqURL: configService.get<string>('rmq'),
       ttl: configService.get('cache_ttl') || 5,
     };
   },

@@ -9,6 +9,8 @@ import { ReportOrderInterface } from './interfaces/report-order.interface';
 import { TopSellerInterface } from './interfaces/top-seller.interface';
 import { OrdersUsersInterface } from './interfaces/orders-users-query.interface';
 import { TopSellCategoryInterface } from './interfaces/top-sell-category.interface';
+import { OrdersQueryByCategoryDTO } from './dto/orders-query-category.dto';
+import OrdersQueryByCategoryEntity from './entities/orders-query-category.entity';
 
 @Injectable()
 export class OrdersService {
@@ -60,6 +62,18 @@ export class OrdersService {
         query,
       ),
     );
+  }
+
+  async getOrderByCategory(query: OrdersQueryByCategoryDTO): Promise<OrdersQueryByCategoryEntity> {
+    return lastValueFrom(
+      this.ordersServiceRMQ.send(
+        {
+          cmd: ORDERS_CMD,
+          method: 'get-order-by-category',
+        },
+        query
+      )
+    )
   }
 
   async getReport(query: DayQueryDTO): Promise<ReportOrderInterface[]> {

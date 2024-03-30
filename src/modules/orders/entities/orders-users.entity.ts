@@ -17,7 +17,7 @@ export class OrdersUsersEntity {
   @ApiProperty({
     type: [OrdersUsersItemsEntity],
   })
-  books: [OrdersUsersItemsEntity];
+  books: OrdersUsersItemsEntity[];
 
   @ApiProperty({
     type: String,
