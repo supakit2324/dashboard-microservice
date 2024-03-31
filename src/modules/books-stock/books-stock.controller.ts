@@ -37,6 +37,8 @@ import { RunningOutEntity } from './entities/running-out.entity';
 @Controller('books-stock')
 @ApiTags('books-stock')
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard, JwtRoleGuard)
+@UseRoles(RolesUserEnum.ADMIN)
 export class BooksStockController {
   private readonly logger = new Logger(BooksStockController.name);
 
@@ -48,8 +50,6 @@ export class BooksStockController {
     description: 'Success',
     type: BooksStockQueryEntity,
   })
-  @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(RolesUserEnum.ADMIN)
   async getPagination(
     @Query() query: BooksStockQueryDto,
   ): Promise<BooksStockQueryEntity> {
@@ -76,8 +76,6 @@ export class BooksStockController {
   }
 
   @Get('get-all-books-in-stock')
-  @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(RolesUserEnum.ADMIN)
   async getAllBooksInStock(): Promise<BooksStockInterface[]> {
     try {
       return await this.booksStockService.getAllBooksInStock();
@@ -92,8 +90,6 @@ export class BooksStockController {
   }
 
   @Post('create-book-to-stock')
-  @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(RolesUserEnum.ADMIN)
   @ApiBody({
     type: CreateBookStockDTO,
   })
@@ -113,8 +109,6 @@ export class BooksStockController {
   }
 
   @Put('add-book-in-stock/:bookId')
-  @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(RolesUserEnum.ADMIN)
   @ApiParam({
     type: String,
     name: 'bookId',
@@ -139,8 +133,6 @@ export class BooksStockController {
   }
 
   @Get('running-out')
-  @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     status: 200,
     description: 'Successs',
@@ -162,8 +154,6 @@ export class BooksStockController {
   }
 
   @Delete(':bookId')
-  @UseGuards(JwtAuthGuard, JwtRoleGuard)
-  @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({
     status: 200,
     description: 'Success',

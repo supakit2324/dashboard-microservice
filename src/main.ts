@@ -7,7 +7,6 @@ import 'dayjs/plugin/timezone';
 import 'dayjs/plugin/isToday';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { getQueueName } from './microservice.providers';
-import { JwtRoleGuard } from './modules/auth/guards/jwt-role.guard';
 import { setupSwagger } from './swagger';
 
 dayjs.extend(require('dayjs/plugin/timezone'));
@@ -30,7 +29,6 @@ async function bootstrap() {
 
   setupSwagger(app)
 
-  app.useGlobalGuards(new JwtRoleGuard(reflector));
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

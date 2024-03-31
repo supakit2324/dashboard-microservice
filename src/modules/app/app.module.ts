@@ -14,6 +14,8 @@ import { BooksModule } from '../books/books.module';
 import { BooksStockModule } from '../books-stock/books-stock.module';
 import { OrdersModule } from '../orders/orders.module';
 import { LoginModule } from '../login/login.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { LoginModule } from '../login/login.module';
     BooksStockModule,
     OrdersModule,
   ],
-  providers: [throttlerServiceProvider],
+  providers: [
+    throttlerServiceProvider,
+  ],
 })
 export class AppModule {}

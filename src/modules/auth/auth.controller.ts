@@ -28,6 +28,7 @@ export class AuthController {
   })
   @ApiResponse({
     status: 200,
+    description: 'Success',
     type: UsersLoginEntity,
   })
   async loginUser(@Body() body: LoginUserDto) {
