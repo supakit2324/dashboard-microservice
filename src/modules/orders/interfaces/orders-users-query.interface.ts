@@ -1,6 +1,6 @@
 import CategoryEnum from 'src/modules/books/enum/category.enum';
 
-export interface OrdersUsersQueryItemsInterface {
+interface OrdersUsersQueryItemsInterface {
   category: CategoryEnum;
   bookId: string;
   bookName: string;
@@ -10,7 +10,7 @@ export interface OrdersUsersQueryItemsInterface {
   quantity: number;
 }
 
-export interface OrdersUsersQueryInterface {
+interface OrdersUsersQueryInterface {
   quantity: number;
   totalPrice: number;
   books: OrdersUsersQueryItemsInterface[];
